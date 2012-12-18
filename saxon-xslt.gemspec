@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Saxon::Xslt::VERSION
   gem.authors       = ["Matt Patterson"]
   gem.email         = ["matt@reprocessed.org"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{Wraps the Saxon 9.4 HE XSLT 2.0 processor so that you can transform XSLT 2 stylesheets in JRuby}
+  gem.summary       = %q{Saxon 9.4 HE XSLT 2.0 for JRuby}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)

@@ -1,6 +1,8 @@
 require 'saxon/xslt/version'
-$CLASSPATH << File.expand_path('../../../vendor/saxonica')
 require 'java'
+$CLASSPATH << File.expand_path('../../../vendor/saxonica/saxon9he.jar', __FILE__)
+$CLASSPATH << File.expand_path('../../../vendor/saxonica/saxon9-unpack.jar', __FILE__)
+
 java_import javax.xml.transform.stream.StreamSource 
 
 module JavaIO
@@ -9,7 +11,7 @@ end
 
 module Saxon
   module S9API
-    include_package "net.sf.saxon.s9api"
+    java_import 'net.sf.saxon.s9api.Processor'
   end
 
   class Xslt
@@ -26,7 +28,7 @@ module Saxon
     def transform(xml_path)
       serializer = @processor.newSerializer()
       output = JavaIO::StringWriter.new()
-      serialzer.setOutputWriter(output)
+      serializer.setOutputWriter(output)
       xml = @processor.newDocumentBuilder().build(StreamSource.new(JavaIO::File.new(xml_path)))
       transformer = @xslt.load
       transformer.setInitialContextNode(xml)

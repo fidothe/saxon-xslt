@@ -1,5 +1,5 @@
 module Saxon
-  module Xslt
+  class Xslt
     VERSION = "0.0.1"
   end
 end
