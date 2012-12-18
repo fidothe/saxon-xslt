@@ -5,10 +5,6 @@ $CLASSPATH << File.expand_path('../../../vendor/saxonica/saxon9-unpack.jar', __F
 
 java_import javax.xml.transform.stream.StreamSource 
 
-module JavaIO
-  include_package "java.io"
-end
-
 module Saxon
   module S9API
     java_import 'net.sf.saxon.s9api.Processor'
@@ -22,17 +18,17 @@ module Saxon
     def initialize(xslt_path)
       @processor = S9API::Processor.new(false)
       @compiler = @processor.newXsltCompiler()
-      @xslt = @compiler.compile(StreamSource.new(JavaIO::File.new(xslt_path)))
+      @xslt = @compiler.compile(StreamSource.new(java.io.File.new(xslt_path)))
     end
 
     def transform(xml_path)
       serializer = @processor.newSerializer()
-      output = JavaIO::StringWriter.new()
+      output = java.io.StringWriter.new()
       serializer.setOutputWriter(output)
-      xml = @processor.newDocumentBuilder().build(StreamSource.new(JavaIO::File.new(xml_path)))
+      xml = @processor.newDocumentBuilder().build(StreamSource.new(java.io.File.new(xml_path)))
       transformer = @xslt.load
       transformer.setInitialContextNode(xml)
-      transformer.setDestination(output)
+      transformer.setDestination(serializer)
       transformer.transform
       output.toString
     end
