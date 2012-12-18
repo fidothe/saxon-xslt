@@ -21,11 +21,14 @@ module Saxon
       @xslt = @compiler.compile(StreamSource.new(java.io.File.new(xslt_path)))
     end
 
-    def transform(xml_path)
+    def transform(xml_path_or_io)
+      unless xml_path_or_io.respond_to?(:read)
+        xml_path_or_io = File.open(xml_path_or_io, 'r')
+      end
       serializer = @processor.newSerializer()
       output = java.io.StringWriter.new()
       serializer.setOutputWriter(output)
-      xml = @processor.newDocumentBuilder().build(StreamSource.new(java.io.File.new(xml_path)))
+      xml = @processor.newDocumentBuilder().build(StreamSource.new(xml_path_or_io.to_inputstream))
       transformer = @xslt.load
       transformer.setInitialContextNode(xml)
       transformer.setDestination(serializer)
