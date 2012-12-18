@@ -10,7 +10,9 @@ Gem::Specification.new do |gem|
   gem.email         = ["matt@reprocessed.org"]
   gem.description   = %q{Wraps the Saxon 9.4 HE XSLT 2.0 processor so that you can transform XSLT 2 stylesheets in JRuby}
   gem.summary       = %q{Saxon 9.4 HE XSLT 2.0 for JRuby}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/fidothe/saxon-xslt"
+  gem.licenses      = ["MIT", "MPL-1.0"]
+  gem.platform      = Gem::Platform.local
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
