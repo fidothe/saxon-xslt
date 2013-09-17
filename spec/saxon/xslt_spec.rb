@@ -1,30 +1,30 @@
 require 'saxon-xslt'
 require 'stringio'
 
-describe Saxon::Xslt do
+describe Saxon::XSLT do
   def fixture_path(path)
     File.expand_path(File.join('../../fixtures', path), __FILE__)
   end
 
   context "compiling the stylesheet" do
     it "can compile a stylesheet from a File object" do
-      expect(Saxon::Xslt.compile(File.open(fixture_path('eg.xsl')))).to respond_to(:transform)
+      expect(Saxon.XSLT(File.open(fixture_path('eg.xsl')))).to respond_to(:transform)
     end
 
     it "can compile a stylesheet from a string" do
       xsl = File.read(fixture_path('eg.xsl'))
-      expect(Saxon::Xslt.compile(xsl)).to respond_to(:transform)
+      expect(Saxon.XSLT(xsl)).to respond_to(:transform)
     end
 
     it "can compile a stylesheet from an IO object" do
       xsl = File.read(fixture_path('eg.xsl'))
       io = StringIO.new(xsl)
-      expect(Saxon::Xslt.compile(io)).to respond_to(:transform)
+      expect(Saxon.XSLT(io)).to respond_to(:transform)
     end
   end
 
   context "transforming a document" do
-    let(:xsl) { Saxon::Xslt.compile(File.open(fixture_path('eg.xsl'))) }
+    let(:xsl) { Saxon.XSLT(File.open(fixture_path('eg.xsl'))) }
 
     it "can transform a document from a File object" do
       expect(xsl.transform(File.open(fixture_path('eg.xml')))).to respond_to(:toString)

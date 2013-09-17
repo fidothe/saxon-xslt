@@ -5,11 +5,11 @@ require 'saxon/xslt/version'
 
 Gem::Specification.new do |gem|
   gem.name          = "saxon-xslt"
-  gem.version       = Saxon::Xslt::VERSION
+  gem.version       = Saxon::XSLT::VERSION
   gem.authors       = ["Matt Patterson"]
   gem.email         = ["matt@reprocessed.org"]
-  gem.description   = %q{Wraps the Saxon 9.4 HE XSLT 2.0 processor so that you can transform XSLT 2 stylesheets in JRuby}
-  gem.summary       = %q{Saxon 9.4 HE XSLT 2.0 for JRuby}
+  gem.description   = %q{Wraps the Saxon 9.4 HE XSLT 2.0 processor so that you can transform XSLT 2 stylesheets in JRuby. Sticks closely to the Nokogiri API}
+  gem.summary       = %q{Saxon 9.4 HE XSLT 2.0 for JRuby with Nokogiri's API}
   gem.homepage      = "https://github.com/fidothe/saxon-xslt"
   gem.licenses      = ["MIT", "MPL-1.0"]
   gem.platform      = Gem::Platform.local
