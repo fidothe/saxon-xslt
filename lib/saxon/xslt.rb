@@ -1,22 +1,14 @@
-require 'saxon/xslt/version'
-require 'java'
-$CLASSPATH << File.expand_path('../../../vendor/saxonica/saxon9he.jar', __FILE__)
-$CLASSPATH << File.expand_path('../../../vendor/saxonica/saxon9-unpack.jar', __FILE__)
-
-java_import javax.xml.transform.stream.StreamSource 
+require 'saxon/s9api'
 
 module Saxon
-  module S9API
-    java_import 'net.sf.saxon.s9api.Processor'
-    java_import 'net.sf.saxon.s9api.XdmDestination'
-  end
-
   def self.XSLT(xslt_path_or_io)
     XSLT::Stylesheet.new(xslt_path_or_io)
   end
 
   module XSLT
     class Stylesheet
+      include Saxon::SourceHelpers
+
       def initialize(xslt_path_or_io)
         @processor = S9API::Processor.new(false)
         @compiler = @processor.newXsltCompiler()
@@ -35,17 +27,6 @@ module Saxon
         transformer.setDestination(output)
         transformer.transform
         output.getXdmNode
-      end
-
-      private
-
-      def to_stream_source(path_io_or_string)
-        StreamSource.new(to_inputstream(path_io_or_string))
-      end
-
-      def to_inputstream(path_io_or_string)
-        return path_io_or_string.to_inputstream if path_io_or_string.respond_to?(:read)
-        return java.io.StringReader.new(path_io_or_string)
       end
     end
   end
