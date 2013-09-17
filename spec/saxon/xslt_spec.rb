@@ -48,7 +48,9 @@ describe Saxon::Xslt do
         expect(result.to_s.strip).to eq('<output/>')
       end
 
-      it "can be used as the input document for a transform"
+      it "can be used as the input document for a transform" do
+        expect(xsl.transform(result).to_s.strip).to eq('<piped/>')
+      end
     end
   end
 end

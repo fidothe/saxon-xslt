@@ -22,9 +22,13 @@ module Saxon
       @xslt = @compiler.compile(to_stream_source(xslt_path_or_io))
     end
 
-    def transform(xml_path_or_io)
+    def transform(xdm_node_or_xml_path_or_io)
       output = S9API::XdmDestination.new
-      xml = @processor.newDocumentBuilder().build(to_stream_source(xml_path_or_io))
+      if xdm_node_or_xml_path_or_io.respond_to?(:getNodeKind)
+        xml = xdm_node_or_xml_path_or_io
+      else
+        xml = @processor.newDocumentBuilder().build(to_stream_source(xdm_node_or_xml_path_or_io))
+      end
       transformer = @xslt.load
       transformer.setInitialContextNode(xml)
       transformer.setDestination(output)
