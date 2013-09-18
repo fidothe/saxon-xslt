@@ -18,15 +18,10 @@ module Saxon
         @xslt = @compiler.compile(to_stream_source(xslt_path_or_io))
       end
 
-      def transform(xdm_node_or_xml_path_or_io)
+      def transform(xdm_node)
         output = S9API::XdmDestination.new
-        if xdm_node_or_xml_path_or_io.respond_to?(:getNodeKind)
-          xml = xdm_node_or_xml_path_or_io
-        else
-          xml = Saxon.XML(xdm_node_or_xml_path_or_io)
-        end
         transformer = @xslt.load
-        transformer.setInitialContextNode(xml)
+        transformer.setInitialContextNode(xdm_node)
         transformer.setDestination(output)
         transformer.transform
         output.getXdmNode

@@ -23,26 +23,16 @@ describe Saxon::XSLT do
   context "transforming a document" do
     context "emitting a Document object as the result" do
       let(:xsl) { Saxon.XSLT(File.open(fixture_path('eg.xsl'))) }
+      let(:xml) { Saxon.XML(File.open(fixture_path('eg.xml'))) }
 
-      it "can transform a document from a File object" do
-        expect(xsl.transform(File.open(fixture_path('eg.xml')))).to respond_to(:toString)
+      it "takes a Document object as input for a transformation" do
+        expect(xsl.transform(xml)).to respond_to(:getNodeKind)
       end
 
-      it "can transform a document from a string" do
-        xml = File.read(fixture_path('eg.xml'))
-        expect(xsl.transform(xml)).to respond_to(:toString)
-      end
-
-      it "can transform a document from an IO object" do
-        xml = File.read(fixture_path('eg.xml'))
-        io = StringIO.new(xml)
-        expect(xsl.transform(io)).to respond_to(:toString)
-      end
-      
       context "the transform result" do
-        let(:result) { xsl.transform(File.open(fixture_path('eg.xml'))) }
+        let(:result) { xsl.transform(xml) }
 
-        it "can be serialised to a string with to_s" do
+        it "was produced by a correctly executed XSLT" do
           expect(result.to_s.strip).to eq('<output/>')
         end
 
