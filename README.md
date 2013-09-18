@@ -1,10 +1,12 @@
 # Saxon::Xslt
 
-Wraps the Saxon 9 HE XSLT processor Java API so it's easy to use from your JRuby project
+Wraps the Saxon 9 HE XSLT processor Java API so it's easy to use from your JRuby project, with an API modelled on Nokogiri's.
 
-This is a super-minimal first cut, it doesn't do many, many, things that it should and it is entirely untested. You probably shouldn't be using in production systems.
+This is a super-minimal first cut, it doesn't do many, many, things that it should.
 
 It only runs under JRuby.
+
+[![Build Status](https://travis-ci.org/fidothe/saxon-xslt.png)](https://travis-ci.org/fidothe/saxon-xslt)
 
 You can find Saxon HE at http://sourceforge.net/projects/saxon/ and Saxonica at http://www.saxonica.com/
 
@@ -28,8 +30,9 @@ Or install it yourself as:
 
 ```ruby
 require 'saxon-xslt'
-transformer = Saxon::Xslt.new('/path/to/your.xsl')
-output = transformer.transform('/path/to/your.xml')
+transformer = Saxon.XSLT(File.open('/path/to/your.xsl'))
+input = Saxon.XML(File.open('/path/to/your.xml'))
+output = transformer.transform(input)
 ```
 
 ## Contributing
