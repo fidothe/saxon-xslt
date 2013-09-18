@@ -4,18 +4,17 @@ require 'saxon/processor'
 require 'saxon/xml'
 
 module Saxon
-  def self.XSLT(xslt_path_or_io)
-    XSLT::Stylesheet.new(xslt_path_or_io)
+  def self.XSLT(string_or_io)
+    Saxon::Processor.default.XSLT(string_or_io)
   end
 
   module XSLT
     class Stylesheet
       include Saxon::SourceHelpers
 
-      def initialize(xslt_path_or_io)
-        @processor = Saxon::Processor.default
-        @compiler = @processor.newXsltCompiler()
-        @xslt = @compiler.compile(to_stream_source(xslt_path_or_io))
+      def initialize(processor, string_or_io)
+        compiler = processor.newXsltCompiler()
+        @xslt = compiler.compile(to_stream_source(string_or_io))
       end
 
       def transform(xdm_node)
