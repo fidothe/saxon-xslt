@@ -1,4 +1,7 @@
 require 'saxon/s9api'
+require 'saxon/source_helpers'
+require 'saxon/processor'
+require 'saxon/xml'
 
 module Saxon
   def self.XSLT(xslt_path_or_io)
@@ -10,7 +13,7 @@ module Saxon
       include Saxon::SourceHelpers
 
       def initialize(xslt_path_or_io)
-        @processor = S9API::Processor.new(false)
+        @processor = Saxon::Processor.default
         @compiler = @processor.newXsltCompiler()
         @xslt = @compiler.compile(to_stream_source(xslt_path_or_io))
       end
@@ -20,7 +23,7 @@ module Saxon
         if xdm_node_or_xml_path_or_io.respond_to?(:getNodeKind)
           xml = xdm_node_or_xml_path_or_io
         else
-          xml = @processor.newDocumentBuilder().build(to_stream_source(xdm_node_or_xml_path_or_io))
+          xml = Saxon.XML(xdm_node_or_xml_path_or_io)
         end
         transformer = @xslt.load
         transformer.setInitialContextNode(xml)

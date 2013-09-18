@@ -6,7 +6,7 @@ module Saxon
     include Saxon::SourceHelpers
 
     def XML(string_or_io)
-      processor = S9API::Processor.new(false)
+      processor = Saxon::Processor.default
       builder = processor.newDocumentBuilder()
       builder.build(to_stream_source(string_or_io))
     end
