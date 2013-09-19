@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{Saxon 9.4 HE XSLT 2.0 for JRuby with Nokogiri's API}
   gem.homepage      = "https://github.com/fidothe/saxon-xslt"
   gem.licenses      = ["MIT", "MPL-1.0"]
-  gem.platform      = Gem::Platform.local
+  gem.platform      = 'java'
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
