@@ -1,7 +1,3 @@
-require 'saxon/s9api'
-require 'saxon/source_helpers'
-require 'saxon/processor'
-
 module Saxon
   def self.XML(string_or_io)
     Saxon::Processor.default.XML(string_or_io)

@@ -1,8 +1,3 @@
-require 'saxon/s9api'
-require 'saxon/source_helpers'
-require 'saxon/processor'
-require 'saxon/xml'
-
 module Saxon
   def self.XSLT(string_or_io)
     Saxon::Processor.default.XSLT(string_or_io)
