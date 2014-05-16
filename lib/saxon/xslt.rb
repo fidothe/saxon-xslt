@@ -1,8 +1,3 @@
-require 'saxon/s9api'
-require 'saxon/source_helpers'
-require 'saxon/processor'
-require 'saxon/xml'
-
 module Saxon
   def self.XSLT(string_or_io)
     Saxon::Processor.default.XSLT(string_or_io)
@@ -12,9 +7,9 @@ module Saxon
     class Stylesheet
       include Saxon::SourceHelpers
 
-      def initialize(processor, string_or_io)
+      def initialize(processor, string_or_io, system_id = nil)
         compiler = processor.newXsltCompiler()
-        @xslt = compiler.compile(to_stream_source(string_or_io))
+        @xslt = compiler.compile(to_stream_source(string_or_io, system_id))
       end
 
       def transform(xdm_node)
