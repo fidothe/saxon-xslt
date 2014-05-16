@@ -8,9 +8,9 @@ module Saxon
       class << self
         include Saxon::SourceHelpers
 
-        def new(processor, string_or_io)
+        def new(processor, string_or_io, system_id = nil)
           builder = processor.newDocumentBuilder()
-          builder.build(to_stream_source(string_or_io))
+          builder.build(to_stream_source(string_or_io,system_id))
         end
       end
     end
