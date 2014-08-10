@@ -17,5 +17,12 @@ describe Saxon::XML do
       io = StringIO.new(xml)
       expect(Saxon.XML(io)).to respond_to(:getNodeKind)
     end
+
+    it "can set the system ID of a parsed document" do
+      xml = File.read(fixture_path('eg.xml'))
+      doc = Saxon::XML(xml, system_id: "http://example.org/")
+
+      expect(doc.get_document_uri.to_s).to eq("http://example.org/")
+    end
   end
 end
