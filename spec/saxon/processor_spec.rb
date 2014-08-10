@@ -10,6 +10,6 @@ describe Saxon::Processor do
   end
 
   it "can make a new XML instance" do
-    expect(processor.XML(xsl_file)).to respond_to(:getNodeKind)
+    expect(processor.XML(xsl_file)).to respond_to(:node_kind)
   end
 end
