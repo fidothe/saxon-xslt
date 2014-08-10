@@ -1,5 +1,5 @@
 require 'saxon/s9api'
-require 'saxon/source_helpers'
+require 'saxon/source_helper'
 require 'saxon/processor'
 require 'saxon/xml'
 
@@ -10,11 +10,9 @@ module Saxon
 
   module XSLT
     class Stylesheet
-      include Saxon::SourceHelpers
-
       def initialize(processor, string_or_io)
         compiler = processor.newXsltCompiler()
-        @xslt = compiler.compile(to_stream_source(string_or_io))
+        @xslt = compiler.compile(SourceHelper.to_stream_source(string_or_io))
       end
 
       def transform(xdm_node)

@@ -1,5 +1,5 @@
 require 'saxon/s9api'
-require 'saxon/source_helpers'
+require 'saxon/source_helper'
 require 'saxon/processor'
 
 module Saxon
@@ -10,11 +10,9 @@ module Saxon
   module XML
     class Document
       class << self
-        include Saxon::SourceHelpers
-
         def new(processor, string_or_io)
           builder = processor.newDocumentBuilder()
-          builder.build(to_stream_source(string_or_io))
+          builder.build(SourceHelper.to_stream_source(string_or_io))
         end
       end
     end
