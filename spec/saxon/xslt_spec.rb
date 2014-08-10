@@ -3,25 +3,27 @@ require 'saxon-xslt'
 require 'stringio'
 
 describe Saxon::XSLT do
+  let(:processor) { Saxon::Processor.new }
+
   context "compiling the stylesheet" do
     it "can compile a stylesheet from a File object" do
-      expect(Saxon.XSLT(File.open(fixture_path('eg.xsl')))).to respond_to(:transform)
+      expect(processor.XSLT(File.open(fixture_path('eg.xsl')))).to respond_to(:transform)
     end
 
     it "can compile a stylesheet from a string" do
       xsl = File.read(fixture_path('eg.xsl'))
-      expect(Saxon.XSLT(xsl)).to respond_to(:transform)
+      expect(processor.XSLT(xsl)).to respond_to(:transform)
     end
 
     it "can compile a stylesheet from an IO object" do
       xsl = File.read(fixture_path('eg.xsl'))
       io = StringIO.new(xsl)
-      expect(Saxon.XSLT(io)).to respond_to(:transform)
+      expect(processor.XSLT(io)).to respond_to(:transform)
     end
 
     it "can set the system ID of the Stylesheet correctly" do
       xml = File.read(fixture_path('simple-xsl-import.xsl'))
-      xslt = Saxon::XSLT(xml, system_id: fixture_path('samedir.xsl'))
+      xslt = processor.XSLT(xml, system_id: fixture_path('samedir.xsl'))
 
       # We test this by using an XSL which calls xsl:import with a relative path
       # The relative path breaks unless the system ID is correctly set
@@ -31,8 +33,8 @@ describe Saxon::XSLT do
 
   context "transforming a document" do
     context "emitting a Document object as the result" do
-      let(:xsl) { Saxon.XSLT(File.open(fixture_path('eg.xsl'))) }
-      let(:xml) { Saxon.XML(File.open(fixture_path('eg.xml'))) }
+      let(:xsl) { processor.XSLT(File.open(fixture_path('eg.xsl'))) }
+      let(:xml) { processor.XML(File.open(fixture_path('eg.xml'))) }
 
       it "takes a Document object as input for a transformation" do
         expect(xsl.transform(xml)).to respond_to(:getNodeKind)
