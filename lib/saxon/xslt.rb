@@ -4,15 +4,16 @@ require 'saxon/processor'
 require 'saxon/xml'
 
 module Saxon
-  def self.XSLT(string_or_io)
-    Saxon::Processor.default.XSLT(string_or_io)
+  def self.XSLT(*args)
+    Saxon::Processor.default.XSLT(*args)
   end
 
   module XSLT
     class Stylesheet
-      def initialize(processor, string_or_io)
+      def initialize(processor, string_or_io, opts = {})
         compiler = processor.newXsltCompiler()
-        @xslt = compiler.compile(SourceHelper.to_stream_source(string_or_io))
+        stream_source = SourceHelper.to_stream_source(string_or_io, opts)
+        @xslt = compiler.compile(stream_source)
       end
 
       def transform(xdm_node)

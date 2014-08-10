@@ -18,6 +18,15 @@ describe Saxon::XSLT do
       io = StringIO.new(xsl)
       expect(Saxon.XSLT(io)).to respond_to(:transform)
     end
+
+    it "can set the system ID of the Stylesheet correctly" do
+      xml = File.read(fixture_path('simple-xsl-import.xsl'))
+      xslt = Saxon::XSLT(xml, system_id: fixture_path('samedir.xsl'))
+
+      # We test this by using an XSL which calls xsl:import with a relative path
+      # The relative path breaks unless the system ID is correctly set
+      expect(xslt).to respond_to(:transform)
+    end
   end
 
   context "transforming a document" do
@@ -43,3 +52,4 @@ describe Saxon::XSLT do
     end
   end
 end
+
