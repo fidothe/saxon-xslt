@@ -69,6 +69,15 @@ describe Saxon::SourceHelper do
 
           expect(source.system_id).to be(nil)
         end
+
+        it "can be set explicitly" do
+          input = "Hello mum"
+          source = Saxon::SourceHelper.to_stream_source(input,
+            system_id: '/path/to/src'
+          )
+
+          expect(source.system_id).to eq('/path/to/src')
+        end
       end
 
       context "for inputs where we can infer the path or URI" do
@@ -92,6 +101,15 @@ describe Saxon::SourceHelper do
           source = Saxon::SourceHelper.to_stream_source(open(uri))
 
           expect(source.system_id).to eq(uri)
+        end
+
+        it "overrides the inferred system ID if set explicitly", :vcr do
+          uri = "http://example.org/"
+          source = Saxon::SourceHelper.to_stream_source(open(uri),
+            system_id: '/path/to/src'
+          )
+
+          expect(source.system_id).to eq('/path/to/src')
         end
       end
     end

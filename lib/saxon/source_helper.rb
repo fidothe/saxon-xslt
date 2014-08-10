@@ -2,8 +2,8 @@ java_import javax.xml.transform.stream.StreamSource
 
 module Saxon
   class SourceHelper
-    def self.to_stream_source(path_io_or_string)
-      system_id = to_system_id(path_io_or_string)
+    def self.to_stream_source(path_io_or_string, opts = {})
+      system_id = opts.fetch(:system_id) { to_system_id(path_io_or_string) }
       StreamSource.new(to_inputstream(path_io_or_string), system_id)
     end
 
