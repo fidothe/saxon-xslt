@@ -23,4 +23,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency('rspec', '~> 3.0')
   gem.add_development_dependency('vcr', '~> 2.9.2')
   gem.add_development_dependency('webmock', '~> 1.18.0')
+  gem.add_development_dependency('yard', '~> 0.8.7')
 end
