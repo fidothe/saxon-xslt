@@ -15,25 +15,33 @@ module Saxon
   module XSLT
     # a Stylesheet transforms input (XML) into output
     class Stylesheet
-      # @param processor [S9API::Processor] the Saxon processor object
+      # @param processor [Saxon::Processor] the Saxon processor object
       # @param string_or_io [File, IO, String] the input XSLT
       # @param opts [Hash] Stylesheet and input options
-      def initialize(processor, string_or_io, opts = {})
-        compiler = processor.newXsltCompiler()
-        stream_source = SourceHelper.to_stream_source(string_or_io, opts)
-        @xslt = compiler.compile(stream_source)
+      # @return [Saxon::XSLT::Stylesheet] the compiled XSLT stylesheet
+      def self.parse(processor, string_or_io, opts = {})
+        source = processor.XML(string_or_io, opts)
+        new(source)
+      end
+
+      # @param [Saxon::XML::Document] source the input XSLT as an XML document
+      def initialize(source)
+        processor = source.processor
+        compiler = processor.to_java.new_xslt_compiler()
+        @xslt = compiler.compile(source.to_java.as_source)
       end
 
       # Transform an input document
-      # @param xdm_node the Saxon Document object to transform
-      # @return a Saxon Document object
-      def transform(xdm_node)
+      # @param [Saxon::XML::Document] document the XML Document object to 
+      #   transform
+      # @return a Saxon::XML::Document object
+      def transform(document)
         output = S9API::XdmDestination.new
         transformer = @xslt.load
-        transformer.setInitialContextNode(xdm_node)
+        transformer.setInitialContextNode(document.to_java)
         transformer.setDestination(output)
         transformer.transform
-        output.getXdmNode
+        Saxon::XML::Document.new(output.getXdmNode)
       end
     end
   end

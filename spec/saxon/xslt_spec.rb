@@ -3,7 +3,7 @@ require 'saxon-xslt'
 require 'stringio'
 
 describe Saxon::XSLT do
-  let(:processor) { Saxon::Processor.new }
+  let(:processor) { Saxon::Processor.create }
 
   context "compiling the stylesheet" do
     it "can compile a stylesheet from a File object" do
@@ -29,6 +29,12 @@ describe Saxon::XSLT do
       # The relative path breaks unless the system ID is correctly set
       expect(xslt).to respond_to(:transform)
     end
+
+    it "can compile a stylesheet from a Saxon::XML::Document" do
+      input = processor.XML(File.open(fixture_path('eg.xsl')))
+      xslt = Saxon::XSLT::Stylesheet.new(input)
+      expect(xslt).to respond_to(:transform)
+    end
   end
 
   context "transforming a document" do
@@ -37,7 +43,7 @@ describe Saxon::XSLT do
       let(:xml) { processor.XML(File.open(fixture_path('eg.xml'))) }
 
       it "takes a Document object as input for a transformation" do
-        expect(xsl.transform(xml)).to respond_to(:getNodeKind)
+        expect { xsl.transform(xml) }.not_to raise_error
       end
 
       context "the transform result" do
