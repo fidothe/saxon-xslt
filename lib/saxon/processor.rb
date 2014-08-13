@@ -20,26 +20,46 @@ module Saxon
 
     # @param config [File, String, IO] an open File, or string,
     #   containing a Saxon configuration file
-    def initialize(config = nil)
+    # @return [Saxon::Processor]
+    def self.create(config = nil)
       licensed_or_config_source = false
       if config
         licensed_or_config_source = Saxon::SourceHelper.to_stream_source(config)
       end
-      @processor = S9API::Processor.new(licensed_or_config_source)
+      s9_processor = S9API::Processor.new(licensed_or_config_source)
+      new(s9_processor)
+    end
+
+    # @param [net.sf.saxon.s9api.Processor] s9_processor The Saxon Processor
+    #   instance to wrap
+    def initialize(s9_processor)
+      @s9_processor = s9_processor
     end
 
     # @param input [File, IO, String] the input XSLT file
     # @param opts [Hash] options for the XSLT
     # @return [Saxon::XSLT::Stylesheet] the new XSLT Stylesheet
     def XSLT(input, opts = {})
-      Saxon::XSLT::Stylesheet.new(@processor, input, opts)
+      Saxon::XSLT::Stylesheet.parse(self, input, opts)
     end
 
     # @param input [File, IO, String] the input XML file
     # @param opts [Hash] options for the XML file
-    # @return [Saxon::XSLT::Stylesheet] the new XML Document
+    # @return [Saxon::XML::Document] the new XML Document
     def XML(input, opts = {})
-      Saxon::XML::Document.new(@processor, input, opts)
+      Saxon::XML::Document.parse(self, input, opts)
+    end
+
+    # @return [net.sf.saxon.s9api.Processor] The underlying Saxon processor
+    def to_java
+      @s9_processor
+    end
+
+    # compare equal if the underlying java processor is the same instance for
+    # self and other
+    # @param other object to compare against
+    def ==(other)
+      other.to_java === to_java
     end
   end
 end
