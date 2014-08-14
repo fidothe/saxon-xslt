@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Saxon::XSLT::VERSION
   gem.authors       = ["Matt Patterson"]
   gem.email         = ["matt@reprocessed.org"]
-  gem.description   = %q{Wraps the Saxon 9.4 HE XSLT 2.0 processor so that you can transform XSLT 2 stylesheets in JRuby. Sticks closely to the Nokogiri API}
-  gem.summary       = %q{Saxon 9.4 HE XSLT 2.0 for JRuby with Nokogiri's API}
+  gem.description   = %q{Wraps the Saxon 9.5 HE XSLT 2.0 processor so that you can transform XSLT 2 stylesheets in JRuby. Sticks closely to the Nokogiri API}
+  gem.summary       = %q{Saxon 9.5 HE XSLT 2.0 for JRuby with Nokogiri's API}
   gem.homepage      = "https://github.com/fidothe/saxon-xslt"
   gem.licenses      = ["MIT", "MPL-1.0"]
   gem.platform      = 'java'

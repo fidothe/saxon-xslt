@@ -35,6 +35,9 @@ input = Saxon.XML(File.open('/path/to/your.xml'))
 output = transformer.transform(input)
 ```
 
+## Saxon version
+`saxon-xslt` 0.5 includes Saxon HE 9.5.1.7
+
 ## Differences between Saxon and Nokogiri
 
 Saxon uses a `Processor` class as its central object: it holds configuration information and acts as a Factory for creating documents or XSLT stylesheet compilers. Unless you need to tweak the config you don't need to worry about this – `saxon-xslt` creates a shared instance behind the scenes when you call `Saxon.XSLT` or `Saxon.XML`. If you need to change the configuration you can create your own instance of `Saxon::Processor` and pass it an open `File` pointing at a Saxon configuration file. (See http://www.saxonica.com/documentation/index.html#!configuration/configuration-file for details of the configuration file.) Once you have a `Saxon::Processor` instance you can call the `XML` and `XSLT` methods on it directly:
