@@ -15,7 +15,7 @@ module Saxon
     # instance
     # @return [Saxon::Processor]
     def self.default
-      @processor ||= new
+      @processor ||= create
     end
 
     # @param config [File, String, IO] an open File, or string,

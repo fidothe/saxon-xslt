@@ -53,4 +53,12 @@ describe Saxon::XML do
     doc = processor.XML('<input/>')
     expect(doc.processor).to eq(processor)
   end
+
+  describe "the default processor convenience" do
+    it "passes through to XML() on the default processor" do
+      expect(Saxon::Processor.default).to receive(:XML).with(:io, :opts)
+
+      Saxon.XML(:io, :opts)
+    end
+  end
 end

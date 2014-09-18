@@ -29,4 +29,15 @@ describe Saxon::Processor do
       expect(configuration.xml_version).to eq(11)
     end
   end
+
+  context "the default configuration" do
+    it "creates a processor on demand" do
+      expect(Saxon::Processor.default).to be_a(Saxon::Processor)
+    end
+
+    it "returns the same processor instance if called repeatedly" do
+      expected = Saxon::Processor.default
+      expect(Saxon::Processor.default).to be(expected)
+    end
+  end
 end

@@ -59,5 +59,13 @@ describe Saxon::XSLT do
       end
     end
   end
+
+  describe "the default processor convenience" do
+    it "passes through to XSLT() on the default processor" do
+      expect(Saxon::Processor.default).to receive(:XSLT).with(:io, :opts)
+
+      Saxon.XSLT(:io, :opts)
+    end
+  end
 end
 
