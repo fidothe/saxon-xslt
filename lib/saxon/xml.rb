@@ -26,6 +26,13 @@ module Saxon
         new(xdm_document)
       end
 
+      # @param [String] expr The XPath expression to evaluate
+      # @return [net.sf.saxon.s9api.XdmValue] return the value, node, or
+      #   nodes selected
+      def xpath(expr)
+        processor.to_java.new_xpath_compiler.evaluate(expr, @xdm_document)
+      end
+
       # @api private
       def initialize(xdm_document)
         @xdm_document = xdm_document

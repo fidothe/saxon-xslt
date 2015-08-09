@@ -57,6 +57,40 @@ describe Saxon::XSLT do
           expect(xsl.transform(result).to_s.strip).to eq('<piped/>')
         end
       end
+
+      context "the parameterized transform result" do
+        context "using hash params" do
+          let(:result) { xsl.transform(xml, {"testparam" => "'non-default'"}) }
+
+          it "contains the parameter value string" do
+            expect(result.to_s.strip).to include("non-default")
+          end
+        end
+
+        context "using array params" do
+
+          let(:result) { xsl.transform(xml, ["testparam", "'non-default'"]) }
+
+          it "contains the parameter value string" do
+            expect(result.to_s.strip).to include("non-default")
+          end
+        end
+
+        context "using malformed array params" do
+          it "should raise ArgumentError" do
+            expect{xsl.transform(xml, ["testparam", "'non-default'", "'wrongo'"])}.to raise_error(ArgumentError)
+          end
+        end
+
+        context "using a selection from the input" do
+          let(:result) { xsl.transform(xml, ["testparam", "local-name(/input)"]) }
+
+          it "should contain the name of the tag" do
+          expect(result.to_s.strip).to include('Select works')
+          end
+        end
+
+      end
     end
   end
 
@@ -68,4 +102,3 @@ describe Saxon::XSLT do
     end
   end
 end
-
