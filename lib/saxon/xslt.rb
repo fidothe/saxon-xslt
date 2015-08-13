@@ -55,8 +55,6 @@ module Saxon
         transformer.transform
         Saxon::XML::Document.new(output.getXdmNode)
       end
-
-      alias_method :apply_to, :transform
     end
   end
 end

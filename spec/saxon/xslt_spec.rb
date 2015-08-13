@@ -58,7 +58,9 @@ describe Saxon::XSLT do
         end
       end
 
-      context "the parameterized transform result" do
+      context "when passing global parameters at transform time" do
+        let(:xsl) { processor.XSLT(File.open(fixture_path('params-eg.xsl'))) }
+
         context "using hash params" do
           let(:result) { xsl.transform(xml, {"testparam" => "'non-default'"}) }
 
@@ -68,7 +70,6 @@ describe Saxon::XSLT do
         end
 
         context "using array params" do
-
           let(:result) { xsl.transform(xml, ["testparam", "'non-default'"]) }
 
           it "contains the parameter value string" do
