@@ -15,6 +15,7 @@ module Saxon
   module XSLT
     # a Stylesheet transforms input (XML) into output
     class Stylesheet
+      # @api private
       # @param processor [Saxon::Processor] the Saxon processor object
       # @param string_or_io [File, IO, String] the input XSLT
       # @param opts [Hash] Stylesheet and input options

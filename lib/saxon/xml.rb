@@ -14,6 +14,7 @@ module Saxon
   module XML
     # Parse an XML File or String into a Document object
     class Document
+      # @api private
       # @param [Saxon::Processor] processor The processor object which should
       #   be used to build the document
       # @param [String, File, IO] string_or_io The input XML
