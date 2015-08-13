@@ -32,17 +32,31 @@ module Saxon
       end
 
       # Transform an input document
-      # @param [Saxon::XML::Document] document the XML Document object to 
+      # @param [Saxon::XML::Document] document the XML Document object to
       #   transform
-      # @return a Saxon::XML::Document object
-      def transform(document)
+      # @param params [Hash] xsl params to set in the xsl document
+      # @return [Saxon::XML::Document] the transformed XML Document
+      def transform(document, params = {})
         output = S9API::XdmDestination.new
         transformer = @xslt.load
         transformer.setInitialContextNode(document.to_java)
         transformer.setDestination(output)
+        case params
+        when Hash
+          params.each do |k,v|
+            transformer.setParameter(S9API::QName.new(k), document.xpath(v))
+          end
+        when Array
+          params.each_slice(2) do |k,v|
+            raise ArgumentError.new("Odd number of values passed as params: #{params}") if v.nil?
+            transformer.setParameter(S9API::QName.new(k), document.xpath(v))
+          end
+        end
         transformer.transform
         Saxon::XML::Document.new(output.getXdmNode)
       end
+
+      alias_method :apply_to, :transform
     end
   end
 end

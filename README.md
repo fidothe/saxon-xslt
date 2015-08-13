@@ -35,8 +35,25 @@ input = Saxon.XML(File.open('/path/to/your.xml'))
 output = transformer.transform(input)
 ```
 
+XSL parameters can be passed to #transform as a flat array of name, value pairs, or as a hash, e.g.
+
+```ruby
+output = transformer.transform(input, ["my-param", "'my-value'",
+                                       "my-other-param", "/take-from@id"])
+
+# or
+
+output = transformer.transform(input, {"my-param" => "'my-value'",
+                                       "my-other-param" => "/take-from@id"})
+```
+
+For those familiar with the Saxon API, names are passed directly to the QName constructor. 
+
+Values are evaluated as XPath expressions in context of the document being transformed; this means
+that, to pass a string, you must pass an XPath that resolves to a string, i.e. "'You must wrap strings in quotes'" 
+
 ## Saxon version
-`saxon-xslt` 0.5 includes Saxon HE 9.5.1.7
+`saxon-xslt` 0.6 includes Saxon HE 9.5.1.7
 
 ## Differences between Saxon and Nokogiri
 
