@@ -90,8 +90,30 @@ describe Saxon::XSLT do
           expect(result.to_s.strip).to include('Select works')
           end
         end
-
       end
+    end
+  end
+
+  describe "applying a stylesheet to a document and returning a serialised XML string" do
+    let(:xsl) { processor.XSLT(File.open(fixture_path('eg.xsl'))) }
+    let(:xml) { processor.XML(File.open(fixture_path('eg.xml'))) }
+
+    it "returns XML as a string" do
+      result = xsl.apply_to(xml)
+
+      expect(result).to match(/<output\/>/)
+    end
+
+    it "correctly invokes transform" do
+      expect(xsl).to receive(:transform).with(xml, {})
+
+      xsl.apply_to(xml)
+    end
+
+    it "correctly passes params through to transform" do
+      expect(xsl).to receive(:transform).with(xml, {"param" => "'value'"})
+
+      xsl.apply_to(xml, {"param" => "'value'"})
     end
   end
 

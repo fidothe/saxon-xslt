@@ -32,15 +32,52 @@ module Saxon
       end
 
       # Transform an input document
+      #
+      # To pass global parameters you can pass a hash with parameter names as
+      # keys and values as XPath expressions as values: to pass a string value,
+      # you need to pass it quoted: `"'string'"`. An unquoted string is an
+      # XPath reference into the document being transformed.
+      #
       # @param [Saxon::XML::Document] document the XML Document object to
       #   transform
-      # @param params [Hash] xsl params to set in the xsl document
+      # @param params [Hash,Array] xsl params to set in the xsl document
       # @return [Saxon::XML::Document] the transformed XML Document
       def transform(document, params = {})
         output = S9API::XdmDestination.new
         transformer = @xslt.load
         transformer.setInitialContextNode(document.to_java)
         transformer.setDestination(output)
+        set_params(transformer, document, params)
+        transformer.transform
+        Saxon::XML::Document.new(output.getXdmNode)
+      end
+
+      # Transform an input document and return the result as a string.
+      #
+      # See #transform for details of params handling
+      # @param [Saxon::XML::Document] document the XML Document object to
+      #   transform
+      # @param params [Hash,Array] xsl params to set in the xsl document
+      # @return [String] the transformed XML Document serialised to a string
+      def apply_to(document, params = {})
+        serialize(transform(document, params))
+      end
+
+      # Serialise a document to a string
+      #
+      # Not the most useful serialiser in the world. Provided for Nokogiri API
+      # compatibility
+      #
+      # @param [Saxon::XML::Document] document the XML Document object to
+      #   serialise
+      # @return [String] the XML Document serialised to a string
+      def serialize(document)
+        document.to_s
+      end
+
+      private
+
+      def set_params(transformer, document, params)
         case params
         when Hash
           params.each do |k,v|
@@ -52,8 +89,6 @@ module Saxon
             transformer.setParameter(S9API::QName.new(k), document.xpath(v))
           end
         end
-        transformer.transform
-        Saxon::XML::Document.new(output.getXdmNode)
       end
     end
   end
