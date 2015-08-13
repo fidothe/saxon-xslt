@@ -24,6 +24,15 @@ module Saxon
         new(source)
       end
 
+      # Compile a stylesheet from an existing Saxon::XML instance of an XSLT
+      # source
+      #
+      # @param [Saxon::XML::Document] source the input XSLT as an XML document
+      # @return [Saxon::XSLT::Stylesheet] the compiled XSLT stylesheet
+      def self.parse_stylesheet_doc(document)
+        new(document)
+      end
+
       # @param [Saxon::XML::Document] source the input XSLT as an XML document
       def initialize(source)
         processor = source.processor

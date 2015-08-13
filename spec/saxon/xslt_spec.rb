@@ -35,6 +35,12 @@ describe Saxon::XSLT do
       xslt = Saxon::XSLT::Stylesheet.new(input)
       expect(xslt).to respond_to(:transform)
     end
+
+    it "provides the parse_stylesheet_doc method to compile from a Saxon::XML::Document" do
+      input = processor.XML(File.open(fixture_path('eg.xsl')))
+      xslt = Saxon::XSLT::Stylesheet.parse_stylesheet_doc(input)
+      expect(xslt).to respond_to(:transform)
+    end
   end
 
   context "transforming a document" do
