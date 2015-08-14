@@ -30,6 +30,20 @@ describe Saxon::Processor do
     end
   end
 
+  context "with configuration set post-creation" do
+    it "works, with configuration set and gotten" do
+      processor = Saxon::Processor.create()
+
+      processor.set_config(:linenumbering => true)
+      expect(processor.get_config(:linenumbering)).to eq(true)
+      expect(processor.XML(File.open(fixture_path('eg.xml'))).xpath('/input').line_number).to be > 0
+
+      processor.set_config(:linenumbering => false)
+      expect(processor.get_config(:linenumbering)).to eq(false)
+      expect(processor.XML(File.open(fixture_path('eg.xml'))).xpath('/input').line_number).to eq(-1)
+    end
+  end
+
   context "the default configuration" do
     it "creates a processor on demand" do
       expect(Saxon::Processor.default).to be_a(Saxon::Processor)
