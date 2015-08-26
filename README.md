@@ -53,7 +53,7 @@ Values are evaluated as XPath expressions in context of the document being trans
 that, to pass a string, you must pass an XPath that resolves to a string, i.e. "'You must wrap strings in quotes'" 
 
 ## Saxon version
-`saxon-xslt` 0.6 includes Saxon HE 9.5.1.7
+`saxon-xslt` 0.7 includes Saxon HE 9.5.1.7
 
 ## Differences between Saxon and Nokogiri
 

@@ -28,13 +28,13 @@ module Saxon
       # Compile a stylesheet from an existing Saxon::XML instance of an XSLT
       # source
       #
-      # @param [Saxon::XML::Document] source the input XSLT as an XML document
+      # @param document [Saxon::XML::Document] the input XSLT as an XML document
       # @return [Saxon::XSLT::Stylesheet] the compiled XSLT stylesheet
       def self.parse_stylesheet_doc(document)
         new(document)
       end
 
-      # @param [Saxon::XML::Document] source the input XSLT as an XML document
+      # @param source [Saxon::XML::Document] the input XSLT as an XML document
       def initialize(source)
         processor = source.processor
         compiler = processor.to_java.new_xslt_compiler()
@@ -48,7 +48,7 @@ module Saxon
       # you need to pass it quoted: `"'string'"`. An unquoted string is an
       # XPath reference into the document being transformed.
       #
-      # @param [Saxon::XML::Document] document the XML Document object to
+      # @param document [Saxon::XML::Document] the XML Document object to
       #   transform
       # @param params [Hash,Array] xsl params to set in the xsl document
       # @return [Saxon::XML::Document] the transformed XML Document
@@ -78,7 +78,7 @@ module Saxon
       # Not the most useful serialiser in the world. Provided for Nokogiri API
       # compatibility
       #
-      # @param [Saxon::XML::Document] document the XML Document object to
+      # @param document [Saxon::XML::Document] the XML Document object to
       #   serialise
       # @return [String] the XML Document serialised to a string
       def serialize(document)
