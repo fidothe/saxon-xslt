@@ -1,5 +1,6 @@
 require 'saxon/s9api'
 require 'saxon/source_helper'
+require 'saxon/configuration'
 require 'saxon/xslt'
 require 'saxon/xml'
 
@@ -18,18 +19,24 @@ module Saxon
       @processor ||= create
     end
 
-    # @param config [File, String, IO] an open File, or string,
-    #   containing a Saxon configuration file
+    # @param config [File, String, IO, Saxon::Configuration] an open File, or string,
+    #   containing a Saxon configuration file; an existing Saxon::Configuration
+    #   object
     # @return [Saxon::Processor]
     def self.create(config = nil)
-      licensed_or_config_source = false
-      if config
+      case config
+      when nil
+        licensed_or_config_source = false
+      when Saxon::Configuration
+        licensed_or_config_source = config.to_java
+      else
         licensed_or_config_source = Saxon::SourceHelper.to_stream_source(config)
       end
       s9_processor = S9API::Processor.new(licensed_or_config_source)
       new(s9_processor)
     end
 
+    # @api private
     # @param [net.sf.saxon.s9api.Processor] s9_processor The Saxon Processor
     #   instance to wrap
     def initialize(s9_processor)
@@ -60,6 +67,11 @@ module Saxon
     # @param other object to compare against
     def ==(other)
       other.to_java === to_java
+    end
+
+    # @return [Saxon::Configuration] This processor's configuration instance
+    def config
+      @config ||= Saxon::Configuration.create(self)
     end
   end
 end

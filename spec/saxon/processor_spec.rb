@@ -4,7 +4,7 @@ require 'saxon/processor'
 describe Saxon::Processor do
   let(:xsl_file) { File.open(fixture_path('eg.xsl')) }
 
-  context "without configuration" do
+  context "without explicit configuration" do
     let(:processor) { Saxon::Processor.create }
 
     it "can make a new XSLT instance" do
@@ -18,15 +18,25 @@ describe Saxon::Processor do
     it "can return the underlying Saxon Processor" do
       expect(processor.to_java).to respond_to(:new_xslt_compiler)
     end
+
+    it "can return the processor's configuration instance" do
+      expect(processor.config).to be_a(Saxon::Configuration)
+    end
   end
 
-  context "with a configuration file" do
+  context "with explicit configuration" do
     it "works, given a valid config XML file" do
       processor = Saxon::Processor.create(File.open(fixture_path('config.xml')))
 
-      saxon_processor = processor.to_java
-      configuration = saxon_processor.underlying_configuration
-      expect(configuration.xml_version).to eq(11)
+      expect(processor.config[:xml_version]).to eq("1.1")
+    end
+
+    it "works, given a Saxon::Configuration object" do
+      config = Saxon::Configuration.create
+      config[:line_numbering] = true
+      processor = Saxon::Processor.create(config)
+
+      expect(processor.config[:line_numbering]).to be(true)
     end
   end
 
