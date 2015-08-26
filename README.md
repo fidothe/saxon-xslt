@@ -9,7 +9,7 @@ Saxon HE is a Java library, so saxon-xslt only runs under JRuby.
 [![Code Climate](https://codeclimate.com/github/fidothe/saxon-xslt/badges/gpa.svg)](https://codeclimate.com/github/fidothe/saxon-xslt)
 [![Test Coverage](https://codeclimate.com/github/fidothe/saxon-xslt/badges/coverage.svg)](https://codeclimate.com/github/fidothe/saxon-xslt/coverage)
 
-You can find Saxon HE at http://sourceforge.net/projects/saxon/ and Saxonica at http://www.saxonica.com/
+You can find Saxon HE at http://saxon.sourceforge.net/ and Saxonica at http://www.saxonica.com/
 
 Saxon HE is (c) Michael H. Kay and released under the Mozilla MPL 1.0 (http://www.mozilla.org/MPL/1.0/)
 
