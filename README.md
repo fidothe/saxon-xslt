@@ -2,11 +2,12 @@
 
 Wraps the Saxon 9 HE XSLT processor Java API so it's easy to use from your JRuby project, with an API modelled on Nokogiri's.
 
-This is a super-minimal first cut, it doesn't do many, many, things that it should.
+Saxon HE is a Java library, so saxon-xslt only runs under JRuby.
 
-It only runs under JRuby.
-
+[![Gem Version](https://badge.fury.io/rb/saxon-xslt.svg)](http://badge.fury.io/rb/saxon-xslt)
 [![Build Status](https://travis-ci.org/fidothe/saxon-xslt.png)](https://travis-ci.org/fidothe/saxon-xslt)
+[![Code Climate](https://codeclimate.com/github/fidothe/saxon-xslt/badges/gpa.svg)](https://codeclimate.com/github/fidothe/saxon-xslt)
+[![Test Coverage](https://codeclimate.com/github/fidothe/saxon-xslt/badges/coverage.svg)](https://codeclimate.com/github/fidothe/saxon-xslt/coverage)
 
 You can find Saxon HE at http://sourceforge.net/projects/saxon/ and Saxonica at http://www.saxonica.com/
 
@@ -47,10 +48,10 @@ output = transformer.transform(input, {"my-param" => "'my-value'",
                                        "my-other-param" => "/take-from@id"})
 ```
 
-For those familiar with the Saxon API, names are passed directly to the QName constructor. 
+For those familiar with the Saxon API, names are passed directly to the QName constructor.
 
 Values are evaluated as XPath expressions in context of the document being transformed; this means
-that, to pass a string, you must pass an XPath that resolves to a string, i.e. "'You must wrap strings in quotes'" 
+that, to pass a string, you must pass an XPath that resolves to a string, i.e. "'You must wrap strings in quotes'"
 
 ## Saxon version
 `saxon-xslt` 0.7 includes Saxon HE 9.5.1.7
