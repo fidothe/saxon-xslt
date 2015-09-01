@@ -36,16 +36,17 @@ input = Saxon.XML(File.open('/path/to/your.xml'))
 output = transformer.transform(input)
 ```
 
-XSL parameters can be passed to #transform as a flat array of name, value pairs, or as a hash, e.g.
+XSL parameters can be passed to `#transform` as a flat array of `name`, `value` pairs, or as a hash. `name` can be either a string or a symbol, e.g.
 
 ```ruby
 output = transformer.transform(input, ["my-param", "'my-value'",
-                                       "my-other-param", "/take-from@id"])
+                                       :'my-other-param', "/take-from@id"])
 
 # or
 
 output = transformer.transform(input, {"my-param" => "'my-value'",
-                                       "my-other-param" => "/take-from@id"})
+                                       :'my-other-param' => "/select-from@id",
+                                       my_third_param: "'value-again'"})
 ```
 
 For those familiar with the Saxon API, names are passed directly to the QName constructor.
