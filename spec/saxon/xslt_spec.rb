@@ -75,6 +75,14 @@ describe Saxon::XSLT do
           end
         end
 
+        context "using hash params with symbol keys" do
+          let(:result) { xsl.transform(xml, testparam: "'non-default'") }
+
+          it "contains the parameter value string" do
+            expect(result.to_s.strip).to include("non-default")
+          end
+        end
+
         context "using array params" do
           let(:result) { xsl.transform(xml, ["testparam", "'non-default'"]) }
 
