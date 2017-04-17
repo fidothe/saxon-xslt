@@ -43,6 +43,28 @@ module Saxon
       @s9_processor = s9_processor
     end
 
+    # Set one or more configuration settings for the processor
+    #
+    # @param [Hash] config A hash, the keys of which are configuration
+    #   settings as symbols or strings (e.g. 'lineNumbering', :lineNumbering)
+    #   and the values of which are strings, booleans, or numbers as appropriate
+    # @return [Saxon::Processor] processor The processor config was applied to
+    def set_config(config = {})
+      raise ArgumentError.new("set_config cannot be called with empty config") if config.empty?
+      config.each do |k,v|
+        to_java.setConfigurationProperty("http://saxon.sf.net/feature/#{k}", v)
+      end
+      self
+    end
+
+    # Get value of a configuration setting for a processor
+    #
+    # @param [Symbol, String] prop The name of the property to return the value of
+    # @return [String, Boolean, Numeric] current value for the property
+    def get_config(prop)
+      to_java.getConfigurationProperty("http://saxon.sf.net/feature/#{prop}")
+    end
+
     # @param input [File, IO, String] the input XSLT file
     # @param opts [Hash] options for the XSLT
     # @return [Saxon::XSLT::Stylesheet] the new XSLT Stylesheet
