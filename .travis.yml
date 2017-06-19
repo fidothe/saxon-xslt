@@ -8,6 +8,11 @@ jdk:
   - openjdk7
   - oraclejdk7
   - openjdk6
+
+matrix:
+  exclude:
+    - rvm: jruby-9.1.9.0
+      jdk: openjdk6
 cache: bundler
 env:
   JDK_VERSION_FOR_CODECLIMATE: oraclejdk8
