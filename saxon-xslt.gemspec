@@ -22,6 +22,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency('rake', '~> 10.1')
   gem.add_development_dependency('rspec', '~> 3.0')
   gem.add_development_dependency('vcr', '~> 2.9.2')
+  gem.add_development_dependency('addressable', '~> 2.4.0')
   gem.add_development_dependency('webmock', '~> 1.18.0')
   gem.add_development_dependency('yard', '~> 0.8.7')
   gem.add_development_dependency('simplecov', '~> 0.13')
