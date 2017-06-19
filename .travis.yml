@@ -7,3 +7,11 @@ jdk:
   - oraclejdk7
   - openjdk6
 cache: bundler
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+script:
+  - bundle exec rspec
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+

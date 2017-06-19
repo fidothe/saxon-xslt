@@ -1,7 +1,6 @@
-require 'codeclimate-test-reporter'
-CodeClimate::TestReporter.start
-
 require 'vcr'
+require 'simplecov'
+SimpleCov.start
 
 module FixtureHelpers
   def fixture_path(path)
