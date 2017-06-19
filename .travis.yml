@@ -1,7 +1,7 @@
 sudo: false
 language: ruby
 rvm:
-  - jruby
+  - jruby-1.9
   - jruby-1.7
 jdk:
   - oraclejdk8
@@ -10,7 +10,7 @@ jdk:
   - openjdk6
 cache: bundler
 env:
-  JDK_VERSION_FOR_CODECLIMATE: oraclejdk7
+  JDK_VERSION_FOR_CODECLIMATE: oraclejdk8
   JRUBY_OPTS: "--debug"
 before_script:
   - if [ "$TRAVIS_JDK_VERSION" = "$JDK_VERSION_FOR_CODECLIMATE" ]; then curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter; chmod +x ./cc-test-reporter; fi
