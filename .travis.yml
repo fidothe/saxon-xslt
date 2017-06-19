@@ -1,5 +1,10 @@
 sudo: false
 language: ruby
+dist: trusty
+addons:
+  apt:
+    packages:
+      - haveged
 rvm:
   - jruby-9.1.9.0
   - jruby-1.7.26
@@ -8,7 +13,6 @@ jdk:
   - openjdk7
   - oraclejdk7
   - openjdk6
-
 matrix:
   exclude:
     - rvm: jruby-9.1.9.0
