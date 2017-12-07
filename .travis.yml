@@ -2,17 +2,11 @@ dist: trusty
 sudo: false
 language: ruby
 rvm:
-  - jruby-9.1.9.0
-  - jruby-1.7.26
+  - jruby-9.1.14.0
+  - jruby-1.7.27
 jdk:
-  - oraclejdk9
   - oraclejdk8
   - openjdk7
-  - openjdk6
-matrix:
-  exclude:
-    - rvm: jruby-9.1.9.0
-      jdk: openjdk6
 cache: bundler
 env:
   JDK_VERSION_FOR_CODECLIMATE: oraclejdk8
