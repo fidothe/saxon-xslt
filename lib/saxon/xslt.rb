@@ -13,6 +13,9 @@ module Saxon
 
   module XSLT
     # a Stylesheet transforms input (XML) into output
+    # @!attribute [r] processor
+    #   @return [Saxon::Processor] return the processor used to create the
+    #     source of this transformer
     class Stylesheet
       # @api private
       # @param processor [Saxon::Processor] the Saxon processor object
@@ -33,8 +36,6 @@ module Saxon
         new(document)
       end
 
-      # @return [Saxon::Processor] return the processor used to create the
-      #   source of this transformer
       attr_reader :processor
 
       # @param source [Saxon::XML::Document] the input XSLT as an XML document

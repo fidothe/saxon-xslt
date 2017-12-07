@@ -12,6 +12,9 @@ module Saxon
 
   module XML
     # Parse an XML File or String into a Document object
+    # @!attribute [r] processor
+    #   @return [Saxon::Processor] return the processor used to create this
+    #     document
     class Document
       # @api private
       # @param [Saxon::Processor] processor The processor object which should
