@@ -54,7 +54,7 @@
         schemaAware="false"
         errorListener="net.sf.saxon.StandardErrorListener">
   </xslt>
-  <xquery version="1.1"
+  <xquery version="3.1"
           allowUpdate="false"
           errorListener="net.sf.saxon.StandardErrorListener"
           errorListenerFile=""
