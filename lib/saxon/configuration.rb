@@ -1,3 +1,5 @@
+require 'saxon/s9api'
+
 module Saxon
   # Wraps the <tt>net.saxon.Configuration</tt> class. See
   # http://saxonica.com/documentation9.5/javadoc/net/sf/saxon/Configuration.html
@@ -6,15 +8,43 @@ module Saxon
   # http://saxonica.com/documentation9.5/javadoc/net/sf/saxon/lib/FeatureKeys.html
   # for details of the constant names used to access the values
   class Configuration
+    DEFAULT_SEMAPHORE = Mutex.new
+
+    # Provides a processor with default configuration. Essentially a singleton
+    # instance
+    # @return [Saxon::Processor]
+    def self.default
+      DEFAULT_SEMAPHORE.synchronize do
+        @config ||= create
+      end
+    end
+
     # @param processor [Saxon::Processor] a Saxon::Processor instance
     # @return [Saxon::Configuration]
     def self.create(processor = nil)
+      Saxon::Loader.load!
       if processor
         config = processor.to_java.underlying_configuration
       else
         config = Saxon::S9API::Configuration.new
       end
       new(config)
+    end
+
+    # @param license_path [String] the absolute path to a Saxon PE or EE license file
+    # @return [Saxon::Configuration]
+    def self.create_licensed(license_path)
+      Saxon::Loader.load!
+      java_config = Saxon::S9API::Configuration.makeLicensedConfiguration(nil, nil)
+      config = new(java_config)
+      config[:LICENSE_FILE_LOCATION] = license_path
+      config
+    end
+
+    def self.set_licensed_default!(licensed_configuration)
+      DEFAULT_SEMAPHORE.synchronize do
+        @config = licensed_configuration
+      end
     end
 
     # @api private
@@ -46,7 +76,8 @@ module Saxon
     # @return [Object] the value you passed in
     # @raise [NameError] if the option name does not exist
     def []=(option, value)
-      @config.setConfigurationProperty(option_url(option), value)
+      url = option_url(option)
+      @config.setConfigurationProperty(url, value)
     end
 
     # @return [net.sf.saxon.Configuration] The underlying Saxon Configuration

@@ -1,4 +1,3 @@
-require 'saxon/s9api'
 require 'saxon/source_helper'
 require 'saxon/processor'
 require 'saxon/xml'
@@ -14,6 +13,9 @@ module Saxon
 
   module XSLT
     # a Stylesheet transforms input (XML) into output
+    # @!attribute [r] processor
+    #   @return [Saxon::Processor] return the processor used to create the
+    #     source of this transformer
     class Stylesheet
       # @api private
       # @param processor [Saxon::Processor] the Saxon processor object
@@ -34,9 +36,11 @@ module Saxon
         new(document)
       end
 
+      attr_reader :processor
+
       # @param source [Saxon::XML::Document] the input XSLT as an XML document
       def initialize(source)
-        processor = source.processor
+        @processor = source.processor
         compiler = processor.to_java.new_xslt_compiler()
         @xslt = compiler.compile(source.to_java.as_source)
       end
@@ -59,7 +63,7 @@ module Saxon
         transformer.setDestination(output)
         set_params(transformer, document, params)
         transformer.transform
-        Saxon::XML::Document.new(output.getXdmNode)
+        Saxon::XML::Document.new(output.getXdmNode, processor)
       end
 
       # Transform an input document and return the result as a string.
