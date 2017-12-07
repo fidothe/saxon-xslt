@@ -1,10 +1,9 @@
 require 'spec_helper'
 require 'saxon/xml'
 
-java_import 'net.sf.saxon.s9api.XdmNodeKind'
-java_import 'net.sf.saxon.s9api.XdmNode'
-
 describe Saxon::XML do
+  XdmNode = Saxon::S9API::XdmNode
+  XdmNodeKind = Saxon::S9API::XdmNodeKind
   let(:processor) { Saxon::Processor.create }
 
   context "parsing a document" do

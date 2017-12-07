@@ -16,26 +16,24 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Accept-Ranges:
-      - bytes
       Cache-Control:
       - max-age=604800
       Content-Type:
       - text/html
       Date:
-      - Sun, 10 Aug 2014 09:34:50 GMT
+      - Thu, 07 Dec 2017 14:55:48 GMT
       Etag:
-      - '"359670651"'
+      - '"359670651+ident"'
       Expires:
-      - Sun, 17 Aug 2014 09:34:50 GMT
+      - Thu, 14 Dec 2017 14:55:48 GMT
       Last-Modified:
       - Fri, 09 Aug 2013 23:54:35 GMT
       Server:
-      - ECS (iad/182A)
+      - ECS (dca/2454)
+      Vary:
+      - Accept-Encoding
       X-Cache:
       - HIT
-      X-Ec-Custom-Error:
-      - '1'
       Content-Length:
       - '1270'
     body:
@@ -59,7 +57,7 @@ http_interactions:
         \ or asking for permission.</p>\n    <p><a href=\"http://www.iana.org/domains/example\"\
         >More information...</a></p>\n</div>\n</body>\n</html>\n"
     http_version:
-  recorded_at: Sun, 10 Aug 2014 09:34:50 GMT
+  recorded_at: Thu, 07 Dec 2017 14:55:48 GMT
 - request:
     method: get
     uri: http://example.org/
@@ -76,26 +74,24 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Accept-Ranges:
-      - bytes
       Cache-Control:
       - max-age=604800
       Content-Type:
       - text/html
       Date:
-      - Sun, 10 Aug 2014 09:34:50 GMT
+      - Thu, 07 Dec 2017 14:55:48 GMT
       Etag:
-      - '"359670651"'
+      - '"359670651+ident"'
       Expires:
-      - Sun, 17 Aug 2014 09:34:50 GMT
+      - Thu, 14 Dec 2017 14:55:48 GMT
       Last-Modified:
       - Fri, 09 Aug 2013 23:54:35 GMT
       Server:
-      - ECS (iad/182A)
+      - ECS (dca/2454)
+      Vary:
+      - Accept-Encoding
       X-Cache:
       - HIT
-      X-Ec-Custom-Error:
-      - '1'
       Content-Length:
       - '1270'
     body:
@@ -119,5 +115,5 @@ http_interactions:
         \ or asking for permission.</p>\n    <p><a href=\"http://www.iana.org/domains/example\"\
         >More information...</a></p>\n</div>\n</body>\n</html>\n"
     http_version:
-  recorded_at: Sun, 10 Aug 2014 09:34:50 GMT
-recorded_with: VCR 2.9.2
+  recorded_at: Thu, 07 Dec 2017 14:55:49 GMT
+recorded_with: VCR 2.9.3

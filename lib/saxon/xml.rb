@@ -1,4 +1,3 @@
-require 'saxon/s9api'
 require 'saxon/source_helper'
 require 'saxon/processor'
 
@@ -24,8 +23,12 @@ module Saxon
         builder = processor.to_java.newDocumentBuilder()
         source = SourceHelper.to_stream_source(string_or_io, opts)
         xdm_document = builder.build(source)
-        new(xdm_document)
+        new(xdm_document, processor)
       end
+
+      # @return [Saxon::Processor] return the processor used to create this
+      #   document
+      attr_reader :processor
 
       # @param [String] expr The XPath expression to evaluate
       # @return [net.sf.saxon.s9api.XdmValue] return the value, node, or
@@ -35,8 +38,8 @@ module Saxon
       end
 
       # @api private
-      def initialize(xdm_document)
-        @xdm_document = xdm_document
+      def initialize(xdm_document, processor)
+        @xdm_document, @processor = xdm_document, processor
       end
 
       # @return [net.sf.saxon.s9api.XdmNode] return the underlying Saxon
@@ -48,12 +51,6 @@ module Saxon
       # @return [String] return a simple serialisation of the document
       def to_s
         @xdm_document.to_s
-      end
-
-      # @return [Saxon::Processor] return the processor used to create this
-      #   document
-      def processor
-        Saxon::Processor.new(@xdm_document.processor)
       end
     end
   end

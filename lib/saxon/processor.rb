@@ -16,7 +16,7 @@ module Saxon
     # instance
     # @return [Saxon::Processor]
     def self.default
-      @processor ||= create
+      @processor ||= create(Saxon::Configuration.default)
     end
 
     # @param config [File, String, IO, Saxon::Configuration] an open File, or string,
@@ -24,6 +24,7 @@ module Saxon
     #   object
     # @return [Saxon::Processor]
     def self.create(config = nil)
+      Saxon::Loader.load!
       case config
       when nil
         licensed_or_config_source = false
