@@ -39,19 +39,30 @@ module Saxon
       ([icu] + optional).compact
     end
 
+    def self.jars_not_on_classpath?
+      begin
+        Java::net.sf.saxon.s9api.Processor
+        false
+      rescue
+        true
+      end
+    end
+
     def self.load!(saxon_home = File.expand_path('../../../vendor/saxonica', __FILE__))
       return false if @saxon_loaded
       LOAD_SEMAPHORE.synchronize do
         if Saxon::S9API.const_defined?(:Processor)
           false
         else
-          saxon_home = Pathname.new(saxon_home)
-          raise NoJarsError, saxon_home unless saxon_home.directory?
-          jars = [main_jar(saxon_home)].compact
-          raise MissingJarError if jars.empty?
-          jars += extra_jars(saxon_home)
+          if jars_not_on_classpath?
+            saxon_home = Pathname.new(saxon_home)
+            raise NoJarsError, saxon_home unless saxon_home.directory?
+            jars = [main_jar(saxon_home)].compact
+            raise MissingJarError if jars.empty?
+            jars += extra_jars(saxon_home)
 
-          add_jars_to_classpath!(saxon_home, jars)
+            add_jars_to_classpath!(saxon_home, jars)
+          end
           import_classes_to_namespace!
 
           @saxon_loaded = true
