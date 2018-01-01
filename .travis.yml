@@ -2,7 +2,7 @@ dist: trusty
 sudo: false
 language: ruby
 rvm:
-  - jruby-9.1.14.0
+  - jruby-9.1.15.0
   - jruby-1.7.27
 jdk:
   - oraclejdk8
@@ -15,5 +15,5 @@ before_script:
   - if [ "$TRAVIS_JDK_VERSION" = "$JDK_VERSION_FOR_CODECLIMATE" ]; then curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter; chmod +x ./cc-test-reporter; fi
 script:
   - bundle exec rspec
-  - if [ "$TRAVIS_PULL_REQUEST" = "false" && "$TRAVIS_JDK_VERSION" = "$JDK_VERSION_FOR_CODECLIMATE" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
+  - if [[ "$TRAVIS_PULL_REQUEST" = "false" && "$TRAVIS_JDK_VERSION" = "$JDK_VERSION_FOR_CODECLIMATE" ]]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
 
