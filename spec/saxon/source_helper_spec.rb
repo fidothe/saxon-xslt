@@ -52,6 +52,15 @@ describe Saxon::SourceHelper do
         expect(source).to respond_to(:system_id)
         expect(source.input_stream.to_io.read).to eq(expected)
       end
+
+      it "copes with a directly created JRuby util IOInputStream" do
+        path = fixture_path('eg.xml')
+        input_stream = org.jruby.util.IOInputStream.new(File.open(path))
+        source = Saxon::SourceHelper.to_stream_source(input_stream)
+
+        expect(source).to respond_to(:system_id)
+        expect(source.input_stream.to_io.read).to eq(File.read(path))
+      end
     end
 
     context "StreamSource systemId" do
