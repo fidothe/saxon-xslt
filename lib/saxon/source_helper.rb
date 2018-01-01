@@ -22,7 +22,7 @@ module Saxon
     # Given a File, or IO object which will return either #path or
     # #base_uri, return the #base_uri, if present, or the #path, if present, or
     # nil
-    # @param [File, IO, String] path_io_or_string A Path, File, or IO
+    # @param [File, IO, String, java.org.] path_io_or_string A Path, File, or IO
     #   object representing the input XML file or data, or a String containing
     #   the XML
     def self.to_system_id(path_io_or_string)
@@ -33,10 +33,11 @@ module Saxon
     end
 
     # Given a File, IO, or String return a Java InputStream or StringReader
-    # @param [File, IO, String] path_io_or_string input to be converted to an
-    #   input stream
+    # @param [File, IO, Stringi, org.jruby.util.IOInputStream]
+    #   path_io_or_string input to be converted to an input stream
     # @return [java.io.InputStream, java.io.StringReader] the wrapped input
     def self.to_inputstream(path_io_or_string)
+      return path_io_or_string if org.jruby.util.IOInputStream === path_io_or_string
       return path_io_or_string.to_inputstream if path_io_or_string.respond_to?(:read)
       return java.io.StringReader.new(path_io_or_string)
     end
