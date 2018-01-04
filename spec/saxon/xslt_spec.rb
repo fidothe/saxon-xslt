@@ -101,7 +101,20 @@ describe Saxon::XSLT do
           let(:result) { xsl.transform(xml, ["testparam", "local-name(/input)"]) }
 
           it "should contain the name of the tag" do
-          expect(result.to_s.strip).to include('Select works')
+            expect(result.to_s.strip).to include('Select works')
+          end
+        end
+
+        context "passing a QName-using param" do
+          let(:result) { xsl.transform(xml, {Saxon::S9API::QName.fromClarkName('{http://example.org/ns}qname-param') =>  "true()"}) }
+
+          it "should not contain the qname-related output when the param isn't passed" do
+            result = xsl.transform(xml)
+            expect(result.to_s.strip).to_not include('<qname-param/>')
+          end
+
+          it "should contain the qname-related outputtag" do
+            expect(result.to_s.strip).to include('<qname-param/>')
           end
         end
       end
