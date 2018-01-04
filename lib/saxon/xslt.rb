@@ -91,17 +91,30 @@ module Saxon
 
       private
 
-      def set_params(transformer, document, params)
+      def resolve_q_name(q_name_or_string)
+        case q_name_or_string
+        when S9API::QName
+          q_name_or_string
+        else
+          S9API::QName.new(q_name_or_string.to_s)
+        end
+      end
+
+      def params_as_kv_pairs(params)
         case params
         when Hash
-          params.each do |k,v|
-            transformer.setParameter(S9API::QName.new(k.to_s), document.xpath(v))
-          end
+          params
         when Array
-          params.each_slice(2) do |k,v|
+          params.each_slice(2).map { |k,v|
             raise ArgumentError.new("Odd number of values passed as params: #{params}") if v.nil?
-            transformer.setParameter(S9API::QName.new(k.to_s), document.xpath(v))
-          end
+            [k, v]
+          }
+        end
+      end
+
+      def set_params(transformer, document, params)
+        params_as_kv_pairs(params).each do |k,v|
+          transformer.setParameter(resolve_q_name(k), document.xpath(v))
         end
       end
     end
