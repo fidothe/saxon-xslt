@@ -19,11 +19,11 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_development_dependency('rake', '~> 12.3')
+  gem.add_development_dependency('rake', '~> 11.3')
   gem.add_development_dependency('rspec', '~> 3.0')
   gem.add_development_dependency('vcr', '~> 4.0')
-  gem.add_development_dependency('addressable', '~> 2.5')
-  gem.add_development_dependency('webmock', '~> 3.3')
+  gem.add_development_dependency('addressable', '~> 2.4.0')
+  gem.add_development_dependency('webmock', '~> 2.3.2')
   gem.add_development_dependency('yard', '~> 0.9.12')
   gem.add_development_dependency('simplecov', '~> 0.15')
 end
