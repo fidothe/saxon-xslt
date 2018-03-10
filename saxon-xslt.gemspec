@@ -14,16 +14,16 @@ Gem::Specification.new do |gem|
   gem.licenses      = ["MIT", "MPL-1.0"]
   gem.platform      = 'java'
 
-  gem.files         = `git ls-files`.split($/)
+  gem.files         = `git ls-files`.split($/).reject { |f| f.match(%r{^spec/fixtures/cassettes}) }
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_development_dependency('rake', '~> 10.1')
+  gem.add_development_dependency('rake', '~> 11.3')
   gem.add_development_dependency('rspec', '~> 3.0')
-  gem.add_development_dependency('vcr', '~> 2.9.2')
+  gem.add_development_dependency('vcr', '~> 4.0')
   gem.add_development_dependency('addressable', '~> 2.4.0')
-  gem.add_development_dependency('webmock', '~> 1.18.0')
+  gem.add_development_dependency('webmock', '~> 2.3.2')
   gem.add_development_dependency('yard', '~> 0.9.12')
-  gem.add_development_dependency('simplecov', '~> 0.13')
+  gem.add_development_dependency('simplecov', '~> 0.15')
 end
