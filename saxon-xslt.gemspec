@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
   gem.licenses      = ["MIT", "MPL-1.0"]
   gem.platform      = 'java'
 
-  gem.files         = `git ls-files`.split($/)
+  gem.files         = `git ls-files`.split($/).reject { |f| f.match(%r{^spec/fixtures/cassettes}) }
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
